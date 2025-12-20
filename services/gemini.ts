@@ -1,6 +1,5 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
-import { DemoAnalysis } from "../types";
+import { DemoAnalysis } from "../types.ts";
 
 /**
  * Analyzes a clinical referral note using Gemini 3 Pro to perform risk stratification and triage.

@@ -1,50 +1,39 @@
-
 import React from 'react';
 import { Activity } from 'lucide-react';
 
 interface NavbarProps {
-  scrolled: boolean;
+  isScrolled: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ scrolled }) => {
+const Navbar: React.FC<NavbarProps> = ({ isScrolled }) => {
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white/80 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-6'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isScrolled ? 'bg-white/80 backdrop-blur-lg shadow-sm py-4' : 'bg-transparent py-6'
+    }`}>
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="bg-blue-600 p-1.5 rounded-lg shadow-lg">
+          <div className="bg-kanblue-600 p-1.5 rounded-lg shadow-lg">
             <Activity className="w-6 h-6 text-white" />
           </div>
-          <span className={`text-2xl font-extrabold tracking-tight ${scrolled ? 'text-slate-900' : 'text-slate-900'}`}>
-            KANAI
+          <span className="text-2xl font-black tracking-tight text-slate-900">
+            Kan.AI
           </span>
         </div>
 
-        <nav className="hidden md:flex items-center gap-8">
-          {['Workflow', 'Advantage', 'Capabilities', 'Value'].map((item) => (
-            <a 
-              key={item} 
-              href={`#${item.toLowerCase()}`}
-              className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors"
-            >
-              {item}
-            </a>
-          ))}
-        </nav>
+        <div className="hidden md:flex items-center gap-10">
+          <a href="#about" className="text-sm font-semibold text-slate-600 hover:text-kanblue-600 transition-colors">About</a>
+          <a href="#services" className="text-sm font-semibold text-slate-600 hover:text-kanblue-600 transition-colors">Services</a>
+          <a href="#principles" className="text-sm font-semibold text-slate-600 hover:text-kanblue-600 transition-colors">Principles</a>
+          <a href="#partners" className="text-sm font-semibold text-slate-600 hover:text-kanblue-600 transition-colors">Partners</a>
+        </div>
 
-        <div className="flex items-center gap-4">
-          <button className="hidden sm:block text-sm font-semibold text-slate-600 hover:text-blue-600 px-4 py-2 transition-colors">
-            Log In
-          </button>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-full text-sm font-bold shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5">
-            Request a Demonstration
+        <div>
+          <button className="bg-slate-900 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-slate-800 transition-all transform hover:-translate-y-0.5">
+            Partner with Us
           </button>
         </div>
       </div>
-    </header>
+    </nav>
   );
 };
 
