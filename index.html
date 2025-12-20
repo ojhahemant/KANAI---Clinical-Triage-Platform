@@ -3,24 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kan.AI | Intelligent workflows for modern healthcare</title>
+    <title>Kan.AI | Intelligent Healthcare Workflows</title>
+    <meta name="description" content="Intelligent AI-native workflow platforms for healthcare and life sciences organizations.">
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
                     colors: {
-                        kanblue: {
-                            DEFAULT: '#0066FF',
-                            50: '#f0f7ff',
-                            100: '#e0effe',
-                            200: '#badffd',
-                            600: '#0066FF',
-                            700: '#0054d6',
+                        kan: {
+                            blue: '#0066FF',
+                            navy: '#0A0F1D',
+                            slate: '#F8FAFC',
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
                         }
                     }
                 }
@@ -28,283 +45,392 @@
         }
     </script>
     <style>
-        body { background-color: #ffffff; -webkit-font-smoothing: antialiased; }
         .glass-nav {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
-        .gradient-text {
-            background: linear-gradient(135deg, #0066FF 0%, #00d4ff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        section { scroll-margin-top: 100px; }
-        .hero-blob {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(0,102,255,0.08) 0%, rgba(255,255,255,0) 70%);
-            border-radius: 50%;
-            z-index: 0;
-            pointer-events: none;
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
+
+        .gradient-bg {
+            background: radial-gradient(circle at top right, rgba(0, 102, 255, 0.05), transparent),
+                        radial-gradient(circle at bottom left, rgba(0, 102, 255, 0.02), transparent);
+        }
+
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 </head>
-<body class="font-sans text-slate-900 leading-relaxed overflow-x-hidden">
+<body class="bg-white text-slate-900 font-sans selection:bg-kan-blue selection:text-white overflow-x-hidden">
 
     <!-- Navigation -->
-    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-8">
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-6">
         <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
-            <div class="flex items-center gap-2.5">
-                <div class="bg-kanblue p-1.5 rounded-lg shadow-lg">
-                    <i data-lucide="activity" class="w-5 h-5 text-white"></i>
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="bg-kan-blue w-10 h-10 rounded-xl flex items-center justify-center shadow-lg shadow-kan-blue/20 group-hover:scale-110 transition-transform">
+                    <i data-lucide="activity" class="text-white w-6 h-6"></i>
                 </div>
-                <span class="text-xl font-black tracking-tighter uppercase text-slate-900">Kan.AI</span>
+                <span class="text-2xl font-extrabold tracking-tighter text-kan-navy">Kan.AI</span>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-10">
+                <a href="#about" class="text-sm font-semibold text-slate-600 hover:text-kan-blue transition-colors">About</a>
+                <a href="#services" class="text-sm font-semibold text-slate-600 hover:text-kan-blue transition-colors">Services</a>
+                <a href="#principles" class="text-sm font-semibold text-slate-600 hover:text-kan-blue transition-colors">Principles</a>
+                <a href="#partners" class="text-sm font-semibold text-slate-600 hover:text-kan-blue transition-colors">Partners</a>
             </div>
-            <div class="hidden lg:flex items-center gap-10">
-                <a href="#overview" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 hover:text-kanblue transition-colors">Overview</a>
-                <a href="#about" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 hover:text-kanblue transition-colors">About</a>
-                <a href="#services" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 hover:text-kanblue transition-colors">Services</a>
-                <a href="#principles" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 hover:text-kanblue transition-colors">Principles</a>
+
+            <div class="hidden md:block">
+                <button class="bg-kan-navy text-white px-7 py-3 rounded-full text-sm font-bold hover:bg-kan-blue transition-all active:scale-95 shadow-xl shadow-kan-navy/10">
+                    Request Demonstration
+                </button>
             </div>
-            <button class="bg-slate-900 text-white px-7 py-2.5 rounded-full text-[10px] font-black tracking-widest uppercase hover:bg-black transition-all shadow-xl shadow-slate-200">
-                Request Demo
+
+            <!-- Mobile Toggle -->
+            <button class="md:hidden text-slate-900 p-2" id="menu-btn">
+                <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="hidden fixed inset-0 bg-white z-[60] flex flex-col p-8 md:hidden">
+            <div class="flex justify-between items-center mb-12">
+                <span class="text-2xl font-black text-kan-blue">Kan.AI</span>
+                <button id="close-menu"><i data-lucide="x" class="w-8 h-8"></i></button>
+            </div>
+            <div class="flex flex-col gap-8">
+                <a href="#about" class="text-3xl font-bold text-kan-navy">About</a>
+                <a href="#services" class="text-3xl font-bold text-kan-navy">Services</a>
+                <a href="#principles" class="text-3xl font-bold text-kan-navy">Principles</a>
+                <a href="#partners" class="text-3xl font-bold text-kan-navy">Partners</a>
+                <button class="mt-4 bg-kan-blue text-white py-5 rounded-2xl text-xl font-bold">Request Demo</button>
+            </div>
         </div>
     </nav>
 
-    <!-- Hero -->
-    <header class="relative pt-48 pb-32 lg:pt-64 lg:pb-48 bg-white">
-        <div class="hero-blob"></div>
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <h1 class="text-6xl lg:text-[10rem] font-black text-slate-900 leading-[0.85] tracking-tighter mb-10">
-                Kan.AI
-            </h1>
-            <p class="text-2xl lg:text-5xl italic font-light text-kanblue mb-16 tracking-tight leading-snug">
-                Intelligent workflows for modern healthcare
-            </p>
-            <div class="w-32 h-1.5 bg-slate-900 mb-16"></div>
-            <p class="text-xl lg:text-3xl text-slate-500 font-medium leading-relaxed max-w-4xl mb-16">
-                We help complex service environments move faster, operate more efficiently, and make better decisions—without compromising safety, compliance, or trust.
-            </p>
-            <div class="flex flex-wrap gap-6 items-center">
-                <a href="#overview" class="bg-slate-900 text-white px-10 py-5 rounded-2xl text-lg font-black hover:bg-black transition-all flex items-center gap-3 shadow-2xl shadow-slate-200">
-                    Learn More <i data-lucide="arrow-right" class="w-6 h-6"></i>
-                </a>
-                <span class="text-xs font-black uppercase tracking-[0.3em] text-slate-400">Secure • AI-Native • Regulated</span>
-            </div>
-        </div>
-    </header>
-
-    <!-- Overview -->
-    <section id="overview" class="py-32 bg-slate-50 border-y border-slate-100">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-24 items-start">
-                <div>
-                    <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-kanblue mb-6">Overview</h2>
-                    <h3 class="text-4xl lg:text-6xl font-black tracking-tighter leading-tight text-slate-900 mb-12">Building secure, AI-native platforms.</h3>
-                    <div class="space-y-8 text-xl text-slate-600 font-medium leading-relaxed">
-                        <p>Kan.AI is a technology company focused on building secure, AI-native workflow platforms for healthcare and life sciences organisations.</p>
-                        <p class="text-slate-400 italic">Our approach combines deep domain understanding with modern cloud-native engineering, applied selectively and responsibly.</p>
-                    </div>
-                </div>
-                <div class="bg-white p-12 rounded-[3rem] shadow-sm border border-slate-200">
-                    <p class="text-lg text-slate-600 font-medium leading-relaxed">
-                        Kan.AI works with public and private healthcare providers, digital health innovators, and enterprise partners to modernise operations and unlock measurable efficiency gains.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About -->
-    <section id="about" class="py-32 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-kanblue mb-6">About Kan.AI</h2>
-            <h3 class="text-4xl lg:text-6xl font-black tracking-tighter leading-tight text-slate-900 mb-20">Addressing the pressure.</h3>
+    <main class="gradient-bg">
+        <!-- Hero Section -->
+        <header class="relative pt-48 pb-32 lg:pt-64 lg:pb-48 overflow-hidden">
+            <div class="absolute top-0 right-0 -mr-24 -mt-24 w-[800px] h-[800px] bg-kan-blue/5 rounded-full blur-[120px]"></div>
             
-            <div class="grid lg:grid-cols-2 gap-24">
-                <div class="text-xl text-slate-600 space-y-8 font-medium">
-                    <p>Healthcare systems operate under increasing pressure—rising demand, constrained capacity, fragmented workflows, and stringent regulatory requirements.</p>
-                    <p>Kan.AI exists to address this challenge.</p>
-                    <p>We design and deliver intelligent workflow solutions that sit at the intersection of healthcare operations, secure digital platforms, and applied artificial intelligence.</p>
-                </div>
-                <div class="grid sm:grid-cols-2 gap-6">
-                    <div class="flex items-center gap-4 bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                        <i data-lucide="stethoscope" class="w-6 h-6 text-kanblue"></i>
-                        <span class="font-bold text-slate-800 uppercase text-[10px] tracking-widest">Healthcare ops</span>
+            <div class="max-w-7xl mx-auto px-6 relative z-10">
+                <div class="max-w-4xl">
+                    <div class="reveal">
+                        <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-kan-blue/10 text-kan-blue text-xs font-bold uppercase tracking-widest mb-8 border border-kan-blue/10">
+                            <span class="relative flex h-2 w-2">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-kan-blue opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-kan-blue"></span>
+                            </span>
+                            AI-Native Healthcare
+                        </span>
+                        <h1 class="text-5xl lg:text-8xl font-black text-kan-navy leading-[1.05] tracking-tight mb-10">
+                            Intelligent workflows for <span class="text-kan-blue">modern healthcare</span>
+                        </h1>
                     </div>
-                    <div class="flex items-center gap-4 bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                        <i data-lucide="shield-check" class="w-6 h-6 text-kanblue"></i>
-                        <span class="font-bold text-slate-800 uppercase text-[10px] tracking-widest">Secure platforms</span>
-                    </div>
-                    <div class="flex items-center gap-4 bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                        <i data-lucide="brain" class="w-6 h-6 text-kanblue"></i>
-                        <span class="font-bold text-slate-800 uppercase text-[10px] tracking-widest">Applied AI</span>
-                    </div>
-                    <div class="flex items-center gap-4 bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                        <i data-lucide="network" class="w-6 h-6 text-kanblue"></i>
-                        <span class="font-bold text-slate-800 uppercase text-[10px] tracking-widest">Integration</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-32 grid md:grid-cols-3 gap-8">
-                <div class="p-12 bg-slate-900 text-white rounded-[3rem]">
-                    <h4 class="text-2xl font-black mb-4 tracking-tight leading-none">Healthcare-first design</h4>
-                    <p class="text-slate-400 font-medium text-sm leading-relaxed">Technology must fit clinical and operational realities.</p>
-                </div>
-                <div class="p-12 bg-slate-900 text-white rounded-[3rem]">
-                    <h4 class="text-2xl font-black mb-4 tracking-tight leading-none">Responsible AI</h4>
-                    <p class="text-slate-400 font-medium text-sm leading-relaxed">AI should be explainable, auditable, and governed.</p>
-                </div>
-                <div class="p-12 bg-slate-900 text-white rounded-[3rem]">
-                    <h4 class="text-2xl font-black mb-4 tracking-tight leading-none">Secure & Compliant</h4>
-                    <p class="text-slate-400 font-medium text-sm leading-relaxed">Built in from the start, not added later.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services -->
-    <section id="services" class="py-32 bg-slate-50 border-y border-slate-100">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-kanblue mb-6">What We Do</h2>
-            <h3 class="text-4xl lg:text-6xl font-black tracking-tighter leading-tight text-slate-900 mb-20">Operational workflow enablement.</h3>
-            
-            <div class="grid lg:grid-cols-3 gap-8">
-                <div class="bg-white p-12 rounded-[3rem] border border-slate-200 shadow-sm min-h-[400px] flex flex-col justify-between group hover:shadow-2xl transition-all">
-                    <div>
-                        <div class="text-kanblue font-black mb-8 text-xl tracking-tighter">01</div>
-                        <h4 class="text-3xl font-black tracking-tight mb-6">Automation of Care Workflows</h4>
-                        <p class="text-slate-500 font-medium leading-relaxed">Reduce manual hand-offs, minimise duplication of effort, and increase throughput.</p>
-                    </div>
-                    <button class="flex items-center gap-2 font-black uppercase text-[10px] tracking-widest text-slate-400 group-hover:text-kanblue transition-colors">
-                        Learn More <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                    </button>
-                </div>
-                <div class="bg-white p-12 rounded-[3rem] border border-slate-200 shadow-sm min-h-[400px] flex flex-col justify-between group hover:shadow-2xl transition-all">
-                    <div>
-                        <div class="text-kanblue font-black mb-8 text-xl tracking-tighter">02</div>
-                        <h4 class="text-3xl font-black tracking-tight mb-6">Applied AI Solutions</h4>
-                        <p class="text-slate-500 font-medium leading-relaxed">Decision support, triage, and context-aware automation for regulated environments.</p>
-                    </div>
-                    <button class="flex items-center gap-2 font-black uppercase text-[10px] tracking-widest text-slate-400 group-hover:text-kanblue transition-colors">
-                        Learn More <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                    </button>
-                </div>
-                <div class="bg-white p-12 rounded-[3rem] border border-slate-200 shadow-sm min-h-[400px] flex flex-col justify-between group hover:shadow-2xl transition-all">
-                    <div>
-                        <div class="text-kanblue font-black mb-8 text-xl tracking-tighter">03</div>
-                        <h4 class="text-3xl font-black tracking-tight mb-6">Consulting</h4>
-                        <p class="text-slate-500 font-medium leading-relaxed">Strategy, AI roadmaps, and secure digital architecture design.</p>
-                    </div>
-                    <button class="flex items-center gap-2 font-black uppercase text-[10px] tracking-widest text-slate-400 group-hover:text-kanblue transition-colors">
-                        Learn More <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Principles -->
-    <section id="principles" class="py-32 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-kanblue mb-6">Our Principles</h2>
-            <h3 class="text-4xl lg:text-6xl font-black tracking-tighter leading-tight text-slate-900 mb-20">Guiding healthcare excellence.</h3>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="p-10 bg-slate-50 rounded-[2.5rem] border border-slate-100">
-                    <i data-lucide="heart-pulse" class="w-8 h-8 text-kanblue mb-8"></i>
-                    <h4 class="text-xl font-black mb-4 tracking-tight">Healthcare-first design</h4>
-                    <p class="text-slate-500 font-medium text-sm leading-relaxed">Technology must fit clinical and operational realities.</p>
-                </div>
-                <div class="p-10 bg-slate-50 rounded-[2.5rem] border border-slate-100">
-                    <i data-lucide="scale" class="w-8 h-8 text-kanblue mb-8"></i>
-                    <h4 class="text-xl font-black mb-4 tracking-tight">Responsible AI</h4>
-                    <p class="text-slate-500 font-medium text-sm leading-relaxed">AI should be explainable, auditable, and governed.</p>
-                </div>
-                <div class="p-10 bg-slate-50 rounded-[2.5rem] border border-slate-100">
-                    <i data-lucide="shield-check" class="w-8 h-8 text-kanblue mb-8"></i>
-                    <h4 class="text-xl font-black mb-4 tracking-tight">Security by default</h4>
-                    <p class="text-slate-500 font-medium text-sm leading-relaxed">Built in from the start, not added later.</p>
-                </div>
-                <div class="p-10 bg-slate-50 rounded-[2.5rem] border border-slate-100">
-                    <i data-lucide="target" class="w-8 h-8 text-kanblue mb-8"></i>
-                    <h4 class="text-xl font-black mb-4 tracking-tight">Pragmatic innovation</h4>
-                    <p class="text-slate-500 font-medium text-sm leading-relaxed">Focus on measurable outcomes, not experimentation.</p>
-                </div>
-                <div class="p-10 bg-slate-50 rounded-[2.5rem] border border-slate-100">
-                    <i data-lucide="handshake" class="w-8 h-8 text-kanblue mb-8"></i>
-                    <h4 class="text-xl font-black mb-4 tracking-tight">Partnership mindset</h4>
-                    <p class="text-slate-500 font-medium text-sm leading-relaxed">We work with organisations, not around them.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Partners -->
-    <section class="py-32 bg-slate-50 border-t border-slate-100">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-24 items-center">
-                <div>
-                    <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-kanblue mb-6">Who We Work With</h2>
-                    <h3 class="text-4xl lg:text-6xl font-black tracking-tighter leading-tight text-slate-900 mb-12">Built for regulated environments.</h3>
-                    <p class="text-xl text-slate-500 font-medium leading-relaxed mb-12">
-                        Our solutions are particularly suited to organisations looking to maintain high standards of safety, compliance, and accountability.
-                    </p>
-                    <div class="grid gap-4">
-                        <div class="flex items-center gap-4 p-4 bg-white rounded-2xl border border-slate-200">
-                            <i data-lucide="building-2" class="w-5 h-5 text-kanblue"></i>
-                            <span class="font-bold text-slate-800 uppercase text-[10px] tracking-widest">Public providers</span>
-                        </div>
-                        <div class="flex items-center gap-4 p-4 bg-white rounded-2xl border border-slate-200">
-                            <i data-lucide="microscope" class="w-5 h-5 text-kanblue"></i>
-                            <span class="font-bold text-slate-800 uppercase text-[10px] tracking-widest">Life Sciences</span>
+                    
+                    <div class="reveal" style="transition-delay: 0.1s">
+                        <p class="text-xl lg:text-2xl text-slate-500 font-medium leading-relaxed mb-12 max-w-2xl">
+                            Move faster, operate more efficiently, and make better decisions—without compromising safety, compliance, or trust.
+                        </p>
+                        <div class="flex flex-wrap gap-5">
+                            <button class="bg-kan-blue text-white px-10 py-5 rounded-2xl text-lg font-bold hover:shadow-2xl hover:shadow-kan-blue/30 transition-all active:scale-95">
+                                Explore Platforms
+                            </button>
+                            <button class="bg-white text-kan-navy border border-slate-200 px-10 py-5 rounded-2xl text-lg font-bold hover:bg-slate-50 transition-all">
+                                View Solutions
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div class="bg-slate-900 p-16 rounded-[4rem] text-white">
-                    <h4 class="text-3xl font-black mb-8 tracking-tight leading-none">Internal Positioning</h4>
-                    <ul class="space-y-6">
-                        <li class="flex gap-4 items-start font-bold text-lg text-slate-300">
-                            <div class="w-2 h-2 rounded-full bg-kanblue mt-2.5 flex-shrink-0"></div>
-                            AI-native, but not AI-led hype
-                        </li>
-                        <li class="flex gap-4 items-start font-bold text-lg text-slate-300">
-                            <div class="w-2 h-2 rounded-full bg-kanblue mt-2.5 flex-shrink-0"></div>
-                            Operationally focused, not tool-centric
-                        </li>
-                    </ul>
+            </div>
+        </header>
+
+        <!-- Brief Overview -->
+        <section id="about" class="py-24 bg-kan-navy text-white overflow-hidden relative">
+            <div class="absolute inset-0 opacity-10 pointer-events-none">
+                <div class="absolute top-0 left-0 w-full h-full" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 40px 40px;"></div>
+            </div>
+            
+            <div class="max-w-7xl mx-auto px-6 relative z-10">
+                <div class="grid lg:grid-cols-2 gap-20 items-center">
+                    <div class="reveal">
+                        <h2 class="text-kan-blue text-sm font-black uppercase tracking-[0.3em] mb-6">The Platform</h2>
+                        <h3 class="text-4xl lg:text-5xl font-bold tracking-tight mb-8">Secure, AI-native workflow platforms.</h3>
+                        <p class="text-xl text-slate-400 font-medium leading-relaxed mb-10">
+                            Kan.AI helps complex service environments modernize operations. We combine deep domain understanding with modern cloud-native engineering, applied selectively and responsibly.
+                        </p>
+                        <div class="grid grid-cols-2 gap-8">
+                            <div class="border-l-2 border-kan-blue pl-6">
+                                <div class="text-3xl font-black mb-1">50%</div>
+                                <div class="text-xs uppercase tracking-widest text-slate-500">Task Efficiency</div>
+                            </div>
+                            <div class="border-l-2 border-kan-blue pl-6">
+                                <div class="text-3xl font-black mb-1">99.9%</div>
+                                <div class="text-xs uppercase tracking-widest text-slate-500">Security Uptime</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reveal bg-white/5 p-8 lg:p-12 rounded-[3rem] border border-white/10 backdrop-blur-sm" style="transition-delay: 0.2s">
+                        <h4 class="text-2xl font-bold mb-6">Our Core Focus</h4>
+                        <ul class="space-y-6">
+                            <li class="flex items-start gap-4">
+                                <div class="p-1 rounded-md bg-kan-blue/20 text-kan-blue mt-1">
+                                    <i data-lucide="shield-check" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <span class="block font-bold text-white mb-1">Secure by Design</span>
+                                    <span class="text-sm text-slate-400">HIPAA & GDPR compliant architecture built from the ground up.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <div class="p-1 rounded-md bg-kan-blue/20 text-kan-blue mt-1">
+                                    <i data-lucide="cpu" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <span class="block font-bold text-white mb-1">AI-Native Workflow</span>
+                                    <span class="text-sm text-slate-400">Not just tools, but end-to-end workflow enablement.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <div class="p-1 rounded-md bg-kan-blue/20 text-kan-blue mt-1">
+                                    <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <span class="block font-bold text-white mb-1">Interoperable</span>
+                                    <span class="text-sm text-slate-400">Seamless integration with existing EHR/HIS systems.</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- Services -->
+        <section id="services" class="py-32 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="mb-24 text-center">
+                    <div class="reveal">
+                        <h2 class="text-kan-blue text-sm font-black uppercase tracking-[0.3em] mb-6">Our Capabilities</h2>
+                        <h3 class="text-4xl lg:text-6xl font-black tracking-tighter text-kan-navy">What We Do</h3>
+                        <p class="mt-6 text-xl text-slate-500 max-w-2xl mx-auto font-medium">
+                            Kan.AI helps healthcare organisations modernise how work gets done.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Service 1 -->
+                    <div class="reveal card-hover p-10 lg:p-12 bg-slate-50 rounded-[3rem] border border-slate-100 group">
+                        <div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-10 group-hover:bg-kan-blue group-hover:text-white transition-all">
+                            <i data-lucide="layers" class="w-8 h-8 text-kan-blue group-hover:text-white"></i>
+                        </div>
+                        <h4 class="text-2xl font-black text-kan-navy mb-6">Automation of Care Workflows</h4>
+                        <p class="text-slate-500 font-medium leading-relaxed mb-8">
+                            Reduce manual hand-offs and improve visibility across complex, multi-step clinical processes.
+                        </p>
+                        <ul class="space-y-3 text-sm font-bold text-slate-700">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-kan-blue"></i> Referral & Intake</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-kan-blue"></i> Scheduling Coordination</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-kan-blue"></i> Operational Tasking</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="reveal card-hover p-10 lg:p-12 bg-slate-50 rounded-[3rem] border border-slate-100 group" style="transition-delay: 0.1s">
+                        <div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-10 group-hover:bg-kan-blue group-hover:text-white transition-all">
+                            <i data-lucide="sparkles" class="w-8 h-8 text-kan-blue group-hover:text-white"></i>
+                        </div>
+                        <h4 class="text-2xl font-black text-kan-navy mb-6">Applied AI Solutions</h4>
+                        <p class="text-slate-500 font-medium leading-relaxed mb-8">
+                            We apply AI where it creates clear, auditable value, avoiding "black-box" systems in favor of trust.
+                        </p>
+                        <ul class="space-y-3 text-sm font-bold text-slate-700">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-kan-blue"></i> Decision Support</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-kan-blue"></i> Information Triage</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-kan-blue"></i> Contextual Knowledge Access</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="reveal card-hover p-10 lg:p-12 bg-slate-50 rounded-[3rem] border border-slate-100 group" style="transition-delay: 0.2s">
+                        <div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-10 group-hover:bg-kan-blue group-hover:text-white transition-all">
+                            <i data-lucide="message-square" class="w-8 h-8 text-kan-blue group-hover:text-white"></i>
+                        </div>
+                        <h4 class="text-2xl font-black text-kan-navy mb-6">Strategic Consulting</h4>
+                        <p class="text-slate-500 font-medium leading-relaxed mb-8">
+                            Strategic and technical expertise to help you identify high-impact workflow improvement opportunities.
+                        </p>
+                        <ul class="space-y-3 text-sm font-bold text-slate-700">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-kan-blue"></i> AI & Automation Roadmaps</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-kan-blue"></i> Digital Architectures</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-kan-blue"></i> De-risking Innovation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Principles -->
+        <section id="principles" class="py-32 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col lg:flex-row gap-20">
+                    <div class="lg:w-1/3">
+                        <div class="reveal sticky top-32">
+                            <h2 class="text-kan-blue text-sm font-black uppercase tracking-[0.3em] mb-6">Our Philosophy</h2>
+                            <h3 class="text-4xl font-black tracking-tight text-kan-navy mb-8">Guided by core principles</h3>
+                            <p class="text-slate-500 font-medium leading-relaxed mb-10">
+                                We believe technology should amplify clinical and operational expertise—not replace it. 
+                            </p>
+                            <button class="flex items-center gap-3 text-kan-blue font-bold group">
+                                Learn about our ethics <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="lg:w-2/3">
+                        <div class="grid sm:grid-cols-2 gap-10">
+                            <div class="reveal bg-white p-10 rounded-[2rem] border border-slate-100 shadow-sm">
+                                <h4 class="text-lg font-black mb-3 text-kan-navy">Healthcare-first</h4>
+                                <p class="text-sm text-slate-500 font-medium leading-relaxed">Technology must fit clinical and operational realities, not the other way around.</p>
+                            </div>
+                            <div class="reveal bg-white p-10 rounded-[2rem] border border-slate-100 shadow-sm" style="transition-delay: 0.1s">
+                                <h4 class="text-lg font-black mb-3 text-kan-navy">Responsible AI</h4>
+                                <p class="text-sm text-slate-500 font-medium leading-relaxed">AI should be explainable, auditable, and governed at all levels.</p>
+                            </div>
+                            <div class="reveal bg-white p-10 rounded-[2rem] border border-slate-100 shadow-sm" style="transition-delay: 0.2s">
+                                <h4 class="text-lg font-black mb-3 text-kan-navy">Security by Default</h4>
+                                <p class="text-sm text-slate-500 font-medium leading-relaxed">Built-in security and compliance from the start, not as an afterthought.</p>
+                            </div>
+                            <div class="reveal bg-white p-10 rounded-[2rem] border border-slate-100 shadow-sm" style="transition-delay: 0.3s">
+                                <h4 class="text-lg font-black mb-3 text-kan-navy">Pragmatic Innovation</h4>
+                                <p class="text-sm text-slate-500 font-medium leading-relaxed">Focused on measurable outcomes, not experimentation for its own sake.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partners -->
+        <section id="partners" class="py-32 bg-white">
+            <div class="max-w-7xl mx-auto px-6 text-center">
+                <div class="reveal">
+                    <h2 class="text-kan-blue text-sm font-black uppercase tracking-[0.3em] mb-12">Who We Work With</h2>
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="p-8 bg-slate-50 rounded-2xl flex flex-col items-center justify-center grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all border border-transparent hover:border-kan-blue/10">
+                            <i data-lucide="building-2" class="w-10 h-10 text-kan-navy mb-4"></i>
+                            <span class="text-xs font-black uppercase tracking-widest text-slate-600">Public Healthcare</span>
+                        </div>
+                        <div class="p-8 bg-slate-50 rounded-2xl flex flex-col items-center justify-center grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all border border-transparent hover:border-kan-blue/10">
+                            <i data-lucide="hotel" class="w-10 h-10 text-kan-navy mb-4"></i>
+                            <span class="text-xs font-black uppercase tracking-widest text-slate-600">Private Providers</span>
+                        </div>
+                        <div class="p-8 bg-slate-50 rounded-2xl flex flex-col items-center justify-center grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all border border-transparent hover:border-kan-blue/10">
+                            <i data-lucide="microscope" class="w-10 h-10 text-kan-navy mb-4"></i>
+                            <span class="text-xs font-black uppercase tracking-widest text-slate-600">Life Sciences</span>
+                        </div>
+                        <div class="p-8 bg-slate-50 rounded-2xl flex flex-col items-center justify-center grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all border border-transparent hover:border-kan-blue/10">
+                            <i data-lucide="handshake" class="w-10 h-10 text-kan-navy mb-4"></i>
+                            <span class="text-xs font-black uppercase tracking-widest text-slate-600">Tech Partners</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="py-24 px-6">
+            <div class="max-w-7xl mx-auto bg-kan-blue rounded-[3rem] p-12 lg:p-24 text-white text-center relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -mr-32 -mt-32 blur-3xl"></div>
+                <div class="reveal relative z-10">
+                    <h3 class="text-4xl lg:text-7xl font-black tracking-tighter mb-10">Modernize your operations.</h3>
+                    <p class="text-xl lg:text-2xl text-white/80 font-medium mb-14 max-w-2xl mx-auto">
+                        Join leading health systems in delivering faster, more efficient, and safer patient care.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                        <button class="bg-white text-kan-blue px-10 py-5 rounded-2xl text-xl font-bold hover:shadow-2xl transition-all active:scale-95">
+                            Request Demonstration
+                        </button>
+                        <button class="bg-kan-navy text-white px-10 py-5 rounded-2xl text-xl font-bold hover:bg-black transition-all active:scale-95 border border-white/10">
+                            Contact Our Team
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="bg-white py-24 border-t border-slate-100">
+    <footer class="bg-white pt-24 pb-12">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-12 mb-20">
-                <div class="flex items-center gap-2.5">
-                    <div class="bg-kanblue p-1.5 rounded-lg shadow-lg">
-                        <i data-lucide="activity" class="w-5 h-5 text-white"></i>
+            <div class="flex flex-col md:flex-row justify-between items-start gap-16 mb-24">
+                <div class="max-w-xs">
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="bg-kan-blue w-10 h-10 rounded-xl flex items-center justify-center">
+                            <i data-lucide="activity" class="text-white w-6 h-6"></i>
+                        </div>
+                        <span class="text-2xl font-black tracking-tighter text-kan-navy uppercase">Kan.AI</span>
                     </div>
-                    <span class="text-xl font-black tracking-tighter uppercase text-slate-900">Kan.AI</span>
+                    <p class="text-slate-500 font-medium text-sm leading-relaxed">
+                        Intelligent workflow platforms built for regulated healthcare environments.
+                    </p>
                 </div>
-                <div class="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">
-                    Intelligent Workflows for Modern Healthcare
+                
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-16">
+                    <div>
+                        <h5 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-8">Platform</h5>
+                        <ul class="space-y-4 text-sm font-bold text-slate-600">
+                            <li><a href="#" class="hover:text-kan-blue">Solutions</a></li>
+                            <li><a href="#" class="hover:text-kan-blue">Security</a></li>
+                            <li><a href="#" class="hover:text-kan-blue">Compliance</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-8">Company</h5>
+                        <ul class="space-y-4 text-sm font-bold text-slate-600">
+                            <li><a href="#" class="hover:text-kan-blue">About</a></li>
+                            <li><a href="#" class="hover:text-kan-blue">Consulting</a></li>
+                            <li><a href="#" class="hover:text-kan-blue">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-8">Legal</h5>
+                        <ul class="space-y-4 text-sm font-bold text-slate-600">
+                            <li><a href="#" class="hover:text-kan-blue">Privacy</a></li>
+                            <li><a href="#" class="hover:text-kan-blue">Terms</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <div class="flex flex-col md:flex-row justify-between items-center gap-8 pt-12 border-t border-slate-100 text-[10px] font-black uppercase tracking-[0.2em] text-slate-300">
-                <div>&copy; 2024 Kan.AI Operations. All rights reserved.</div>
-                <div class="flex gap-10">
-                    <a href="#" class="hover:text-slate-600 transition-colors">Privacy</a>
-                    <a href="#" class="hover:text-slate-600 transition-colors">Terms</a>
-                    <a href="#" class="hover:text-slate-600 transition-colors">Safety</a>
+            
+            <div class="pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">
+                <p>&copy; 2024 Kan.AI Operations Inc. All rights reserved.</p>
+                <div class="flex gap-8 mt-6 md:mt-0">
+                    <a href="#" class="hover:text-kan-blue transition-colors">LinkedIn</a>
+                    <a href="#" class="hover:text-kan-blue transition-colors">Twitter</a>
                 </div>
             </div>
         </div>
@@ -312,21 +438,64 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script type="module">
-        // Navbar Scroll
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 20) {
-                nav.classList.add('glass-nav', 'py-4');
-                nav.classList.remove('py-8');
+            if (window.scrollY > 50) {
+                navbar.classList.add('glass-nav', 'py-4');
+                navbar.classList.remove('py-6');
             } else {
-                nav.classList.remove('glass-nav', 'py-4');
-                nav.classList.add('py-8');
+                navbar.classList.remove('glass-nav', 'py-4');
+                navbar.classList.add('py-6');
             }
         });
 
-        // Initialize Icons
-        lucide.createIcons();
+        // Reveal on Scroll
+        const reveal = () => {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    el.classList.add('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', reveal);
+        // Trigger once on load
+        window.onload = () => {
+            reveal();
+            // Force first sections to reveal
+            document.querySelectorAll('header .reveal').forEach(el => el.classList.add('active'));
+        };
+
+        // Mobile Menu Logic
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+        });
     </script>
 </body>
 </html>
